@@ -1,77 +1,48 @@
-﻿import { useState } from 'react';
+﻿import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 export default function EditarProduto() {
-  const [nome, setNome] = useState('Produto Exemplo');
-  const [preco, setPreco] = useState('29.90');
-  const [categoria, setCategoria] = useState('Lanches');
+  const { id } = useParams();
 
-  function salvar() {
-    alert('Alterações salvas com sucesso!');
-  }
+  const [nome, setNome] = useState("");
+  const [preco, setPreco] = useState("");
+  const [categoria, setCategoria] = useState("");
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Editar Produto</h1>
+    <div>
+      <h1 style={{ fontSize: "40px", fontWeight: "bold" }}>
+        Editar Produto #{id}
+      </h1>
 
-      <div style={{
-        marginTop: '20px',
-        display: 'flex',
-        flexDirection: 'column',
-        maxWidth: '400px',
-        gap: '15px'
-      }}>
-
-        <input 
-          type='text'
+      <div style={{ marginTop: 20 }}>
+        <label>Nome</label>
+        <input
+          style={{ display: "block", marginTop: 5 }}
           value={nome}
           onChange={(e) => setNome(e.target.value)}
-          placeholder='Nome'
-          style={input}
         />
 
-        <input 
-          type='number'
+        <label style={{ marginTop: 20 }}>Preço</label>
+        <input
+          type="number"
+          style={{ display: "block", marginTop: 5 }}
           value={preco}
           onChange={(e) => setPreco(e.target.value)}
-          placeholder='Preço'
-          style={input}
         />
 
-        <input 
-          type='text'
+        <label style={{ marginTop: 20 }}>Categoria</label>
+        <select
+          style={{ display: "block", marginTop: 5 }}
           value={categoria}
           onChange={(e) => setCategoria(e.target.value)}
-          placeholder='Categoria'
-          style={input}
-        />
+        >
+          <option value="">Selecione...</option>
+        </select>
 
-        <button onClick={salvar} style={btnSalvar}>
+        <button style={{ marginTop: 30 }}>
           Salvar Alterações
         </button>
-
-        <a href='/produtos' style={{ color:'#aaa', marginTop:'10px' }}>
-          Voltar
-        </a>
       </div>
     </div>
   );
 }
-
-const input = {
-  padding: '12px',
-  background: '#1c1c1c',
-  border: '1px solid #333',
-  borderRadius: '8px',
-  color: 'white'
-};
-
-const btnSalvar = {
-  padding: '12px',
-  marginTop: '10px',
-  background: '#4CAF50',
-  border: 'none',
-  borderRadius: '8px',
-  cursor: 'pointer',
-  color: 'white',
-  fontWeight: 'bold'
-};
