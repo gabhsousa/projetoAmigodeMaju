@@ -16,9 +16,11 @@ export default function Sidebar() {
 
       <Link style={link} to="/">📊 Dashboard</Link>
       <Link style={link} to="/produtos">📦 Produtos</Link>
-      <Link style={link} to="/pedidos">🧾 Pedidos</Link>   {/* ✔ AGORA FUNCIONA */}
+      <Link style={link} to="/pedidos">🧾 Pedidos</Link>
       <Link style={link} to="/categorias">🎯 Categorias</Link>
-      <a style={link}>⚙ Configurações</a>
+
+      {/* CONFIGURAÇÕES — AGORA FUNCIONA */}
+      <Link style={link} to="/configuracoes">⚙ Configurações</Link>
     </div>
   );
 }
@@ -30,4 +32,5 @@ const link = {
   padding: '8px 0',
   cursor: 'pointer'
 };
+
 
