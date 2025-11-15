@@ -31,13 +31,13 @@ export default function Sidebar() {
       gap: '15px',
       height: '100vh'
     }}>
-      <h2 style={{ fontWeight: 'bold', marginBottom: '20px' }}>🍽 Restaurante</h2>
+      <h2 style={{ fontWeight: 'bold', marginBottom: '20px' }}><ion-icon name="restaurant-outline"></ion-icon> Restaurante</h2>
 
-      <Link style={getLinkStyle('/')} to="/">📊 Dashboard</Link>
-      <Link style={getLinkStyle('/produtos')} to="/produtos">📦 Produtos</Link>
-      <Link style={getLinkStyle('/pedidos')} to="/pedidos">🧾 Pedidos</Link>
-      <Link style={getLinkStyle('/categorias')} to="/categorias">🎯 Categorias</Link>
-      <Link style={getLinkStyle('/configuracoes')} to="/configuracoes">⚙ Configurações</Link>
+      <Link style={getLinkStyle('/')} to="/"><ion-icon name="stats-chart-outline"></ion-icon> Dashboard</Link>
+      <Link style={getLinkStyle('/produtos')} to="/produtos"><ion-icon name="cube-outline"></ion-icon> Produtos</Link>
+      <Link style={getLinkStyle('/pedidos')} to="/pedidos"><ion-icon name="receipt-outline"></ion-icon> Pedidos</Link>
+      <Link style={getLinkStyle('/categorias')} to="/categorias"><ion-icon name="reader-outline"></ion-icon> Categorias</Link>
+      <Link style={getLinkStyle('/configuracoes')} to="/configuracoes"><ion-icon name="settings-outline"></ion-icon> Configurações</Link>
     </div>
   );
 }
