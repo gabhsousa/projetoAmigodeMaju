@@ -1,98 +1,64 @@
-﻿import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import api from '../services/api';
+﻿import { useEffect, useState } from "react";
+import { listarProdutos, excluirProduto } from "../services/productService";
+
 
 export default function ListarProdutos() {
-
   const [produtos, setProdutos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   async function carregar() {
-    // Quando conectar com o backend vai funcionar:
-    // const r = await api.get('/produtos');
-    // setProdutos(r.data);
-
-    // TEMPORÁRIO (mock)
-    setProdutos([
-      { id: 1, nome: "Pizza", preco: 39.90, imagem: null },
-      { id: 2, nome: "Hambúrguer", preco: 24.50, imagem: null }
-    ]);
+    try {
+      const data = await listarProdutos();
+      setProdutos(data);
+    } catch (err) {
+      console.error("Erro ao carregar produtos:", err);
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
     carregar();
   }, []);
 
-  const btnEditar = {
-    background: '#444',
-    color: 'white',
-    padding: '6px 12px',
-    borderRadius: '6px'
-  };
+  async function handleDelete(id) {
+    if (!confirm("Deseja realmente excluir este produto?")) return;
 
-  const btnNova = {
-    background: '#ff7b00',
-    color: 'white',
-    padding: '10px 16px',
-    borderRadius: '6px',
-    textDecoration: 'none',
-    fontWeight: 'bold'
-  };
+    await excluirProduto(id);
+    carregar();
+  }
 
-  const imagemStyle = {
-    width: "60px",
-    height: "60px",
-    borderRadius: "6px",
-    objectFit: "cover"
-  };
+  if (loading) return <p>Carregando...</p>;
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div>
+      <h2>Lista de Produtos</h2>
 
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center"
-      }}>
-        <h1>Produtos</h1>
-
-        <Link to="/produtos/criar" style={btnNova}>+ Novo Produto</Link>
-      </div>
-
-      <table border="1" cellPadding="10" style={{ marginTop: "20px" }}>
+      <table>
         <thead>
           <tr>
-            <th>Foto</th>
             <th>ID</th>
             <th>Nome</th>
             <th>Preço</th>
+            <th>Categoria</th>
             <th>Ações</th>
           </tr>
         </thead>
 
         <tbody>
-          {produtos.map(p => (
+          {produtos.map((p) => (
             <tr key={p.id}>
-              <td>
-                <img
-                  src={p.imagem || "https://via.placeholder.com/60"}
-                  alt="produto"
-                  style={imagemStyle}
-                />
-              </td>
-
               <td>{p.id}</td>
               <td>{p.nome}</td>
-              <td>R$ {p.preco.toFixed(2)}</td>
-
+              <td>R$ {Number(p.preco).toFixed(2)}</td>
+              <td>{p.categoria?.nome || "Sem categoria"}</td>
               <td>
-                <Link to={`/produtos/editar/${p.id}`}>
-                  <button style={btnEditar}>Editar</button>
-                </Link>
+                <button>Editar</button>
+                <button onClick={() => handleDelete(p.id)}>Excluir</button>
               </td>
             </tr>
           ))}
         </tbody>
-
       </table>
     </div>
   );
