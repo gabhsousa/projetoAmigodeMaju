@@ -1,4 +1,4 @@
-﻿import { Bar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   BarElement,
@@ -28,14 +28,8 @@ export default function Dashboard() {
     maintainAspectRatio: false,
     plugins: { legend: { display: false } },
     scales: {
-      x: {
-        ticks: { color: "#999" },
-        grid: { display: false }
-      },
-      y: {
-        ticks: { color: "#777" },
-        grid: { color: "#1A1A1A" }
-      }
+      x: { ticks: { color: "#999" }, grid: { display: false } },
+      y: { ticks: { color: "#777" }, grid: { color: "#1A1A1A" } }
     }
   };
 
@@ -44,7 +38,7 @@ export default function Dashboard() {
       <h1 style={styles.title}>Dashboard</h1>
       <p style={styles.subtitle}>Resumo do desempenho de hoje</p>
 
-      {/* KPIs DO TOPO */}
+      {/* KPIs */}
       <div style={styles.kpiRow}>
         <div style={styles.card}>
           <div style={styles.cardHeader}>
@@ -73,12 +67,11 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* LINHA DE BAIXO: GRÁFICO + ÚLTIMOS PEDIDOS */}
+      {/* Gráfico + Últimos pedidos */}
       <div style={styles.bottomRow}>
         <div style={styles.bigCard}>
           <h3 style={styles.bigCardTitle}>Pedidos – Últimos 7 dias</h3>
           <p style={styles.bigCardSubtitle}>Visão geral semanal</p>
-
           <div style={styles.chartArea}>
             <Bar data={chartData} options={chartOptions} />
           </div>
@@ -93,17 +86,14 @@ export default function Dashboard() {
               <span>João Silva</span>
               <span style={styles.price}>R$ 57,00</span>
             </div>
-
             <div style={styles.orderItem}>
               <span>Ana Souza</span>
               <span style={styles.price}>R$ 21,00</span>
             </div>
-
             <div style={styles.orderItem}>
               <span>Pedro Lima</span>
               <span style={styles.price}>R$ 89,00</span>
             </div>
-
             <div style={styles.orderItem}>
               <span>Carla Melo</span>
               <span style={styles.price}>R$ 18,00</span>
@@ -115,27 +105,17 @@ export default function Dashboard() {
   );
 }
 
-/* ------- ESTILOS NO ESTILO DO FIGMA ------- */
 const styles = {
   page: {
     width: "100%",
-    padding: "20px 6px 10px 6px",
+    padding: "20px",
     color: "#F5F5F5",
     fontFamily: "Inter, sans-serif",
     boxSizing: "border-box"
   },
 
-  title: {
-    fontSize: "32px",
-    fontWeight: 700,
-    marginBottom: "4px"
-  },
-
-  subtitle: {
-    fontSize: "14px",
-    color: "#B3B3C5",
-    marginBottom: "22px"
-  },
+  title: { fontSize: "32px", fontWeight: 700, marginBottom: "4px" },
+  subtitle: { fontSize: "14px", color: "#B3B3C5", marginBottom: "22px" },
 
   kpiRow: {
     display: "grid",
@@ -152,38 +132,13 @@ const styles = {
     boxShadow: "0 10px 25px rgba(0,0,0,0.35)"
   },
 
-  cardHeader: {
-    display: "flex",
-    alignItems: "center",
-    gap: "8px"
-  },
+  cardHeader: { display: "flex", alignItems: "center", gap: "8px" },
+  icon: { fontSize: "18px" },
+  cardTitle: { fontSize: "14px", fontWeight: 600 },
 
-  icon: {
-    fontSize: "18px"
-  },
-
-  cardTitle: {
-    fontSize: "14px",
-    fontWeight: 600
-  },
-
-  cardValue: {
-    fontSize: "30px",
-    fontWeight: 700,
-    marginTop: "8px"
-  },
-
-  positive: {
-    fontSize: "12px",
-    color: "#2ECC71",
-    marginTop: "4px"
-  },
-
-  negative: {
-    fontSize: "12px",
-    color: "#E74C3C",
-    marginTop: "4px"
-  },
+  cardValue: { fontSize: "30px", fontWeight: 700, marginTop: "8px" },
+  positive: { fontSize: "12px", color: "#2ECC71", marginTop: "4px" },
+  negative: { fontSize: "12px", color: "#E74C3C", marginTop: "4px" },
 
   bottomRow: {
     display: "grid",
@@ -196,31 +151,15 @@ const styles = {
     padding: "20px",
     borderRadius: "18px",
     border: "1px solid #262732",
-    minHeight: "280px",
     boxShadow: "0 10px 25px rgba(0,0,0,0.35)"
   },
 
-  bigCardTitle: {
-    fontSize: "15px",
-    fontWeight: 600
-  },
+  bigCardTitle: { fontSize: "15px", fontWeight: 600 },
+  bigCardSubtitle: { fontSize: "13px", color: "#A0A0B3", marginBottom: "14px" },
 
-  bigCardSubtitle: {
-    fontSize: "13px",
-    color: "#A0A0B3",
-    marginBottom: "14px"
-  },
+  chartArea: { width: "100%", height: "210px" },
 
-  chartArea: {
-    width: "100%",
-    height: "210px"
-  },
-
-  orderList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "14px"
-  },
+  orderList: { display: "flex", flexDirection: "column", gap: "14px" },
 
   orderItem: {
     display: "flex",
@@ -230,8 +169,5 @@ const styles = {
     fontSize: "14px"
   },
 
-  price: {
-    color: "#F1F1F5",
-    fontWeight: 600
-  }
+  price: { color: "#F1F1F5", fontWeight: 600 }
 };

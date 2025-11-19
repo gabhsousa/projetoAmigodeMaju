@@ -1,29 +1,40 @@
-﻿import { Link } from 'react-router-dom';
-import api from '../services/api';
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from "react";
+import { listarProdutos, excluirProduto } from "../services/productService";
+
 
 export default function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   async function carregar() {
-    const r = await api.get('/produtos');
-    setProdutos(r.data);
+    try {
+      const data = await listarProdutos();
+      setProdutos(data);
+    } catch (err) {
+      console.error("Erro ao carregar produtos:", err);
+    } finally {
+      setLoading(false);
+    }
   }
 
-  useEffect(() => { carregar(); }, []);
+  useEffect(() => {
+    carregar();
+  }, []);
 
-  const btnEditar = {
-    background: '#444',
-    color: 'white',
-    padding: '6px 12px',
-    borderRadius: '6px'
-  };
+  async function handleDelete(id) {
+    if (!confirm("Deseja realmente excluir este produto?")) return;
+
+    await excluirProduto(id);
+    carregar();
+  }
+
+  if (loading) return <p>Carregando...</p>;
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Produtos</h1>
+    <div>
+      <h2>Lista de Produtos</h2>
 
-      <table border="1" cellPadding="10" style={{ marginTop: '20px' }}>
+      <table>
         <thead>
           <tr>
             <th>ID</th>
@@ -35,16 +46,15 @@ export default function ListarProdutos() {
         </thead>
 
         <tbody>
-          {produtos.map(p => (
+          {produtos.map((p) => (
             <tr key={p.id}>
               <td>{p.id}</td>
               <td>{p.nome}</td>
-              <td>{p.preco}</td>
-              <td>{p.categoria}</td>
+              <td>R$ {Number(p.preco).toFixed(2)}</td>
+              <td>{p.categoria?.nome || "Sem categoria"}</td>
               <td>
-                <Link to={`/produtos/editar/${p.id}`}>
-                  <button style={btnEditar}>Editar</button>
-                </Link>
+                <button>Editar</button>
+                <button onClick={() => handleDelete(p.id)}>Excluir</button>
               </td>
             </tr>
           ))}
@@ -53,5 +63,3 @@ export default function ListarProdutos() {
     </div>
   );
 }
-
-

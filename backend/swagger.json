@@ -16,7 +16,7 @@
       "get": {
         "summary": "Lista todas as categorias",
         "tags": [
-          "Categorias"
+          "Categories"
         ],
         "responses": {
           "200": {
@@ -27,19 +27,14 @@
       "post": {
         "summary": "Cria uma nova categoria",
         "tags": [
-          "Categorias"
+          "Categories"
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "nome": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/CreateCategoryDTO"
               }
             }
           }
@@ -50,13 +45,288 @@
           }
         }
       }
+    },
+    "/categories/{id}": {
+      "get": {
+        "summary": "Busca uma categoria pelo ID",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoria encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza uma categoria",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCategoryDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Categoria atualizada com sucesso"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove uma categoria",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Categoria excluída com sucesso"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "summary": "Lista todos os produtos",
+        "tags": [
+          "Products"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista retornada com sucesso"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo produto",
+        "tags": [
+          "Products"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Produto criado com sucesso"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "summary": "Busca um produto pelo ID",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um produto pelo ID",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Produto atualizado com sucesso"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove um produto",
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Produto removido com sucesso"
+          }
+        }
+      }
     }
   },
-  "components": {},
+  "components": {
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "descricao": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateCategoryDTO": {
+        "type": "object",
+        "required": [
+          "nome"
+        ],
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Bebidas"
+          },
+          "descricao": {
+            "type": "string",
+            "example": "Refrigerantes, sucos e afins"
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "preco": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "estoque": {
+            "type": "integer"
+          },
+          "categoriaId": {
+            "type": "integer"
+          }
+        }
+      },
+      "CreateProductDTO": {
+        "type": "object",
+        "required": [
+          "nome",
+          "preco",
+          "categoriaId"
+        ],
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Pizza Margherita"
+          },
+          "descricao": {
+            "type": "string",
+            "example": "Pizza clássica com molho de tomate e manjericão"
+          },
+          "preco": {
+            "type": "number",
+            "example": 29.9
+          },
+          "estoque": {
+            "type": "integer",
+            "example": 10
+          },
+          "categoriaId": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      }
+    }
+  },
   "tags": [
     {
-      "name": "Categorias",
-      "description": "Gerenciamento de categorias de produtos"
+      "name": "Categories",
+      "description": "CRUD de categorias"
+    },
+    {
+      "name": "Products",
+      "description": "CRUD de produtos"
     }
   ]
 }
