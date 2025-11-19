@@ -1,38 +1,21 @@
-﻿import { useEffect, useState } from "react";
-import { listarProdutos, excluirProduto } from "../services/productService";
-
+﻿import { useState, useEffect } from "react";
+import { listarProdutos } from "../services/productService";
 
 export default function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  async function carregar() {
-    try {
-      const data = await listarProdutos();
-      setProdutos(data);
-    } catch (err) {
-      console.error("Erro ao carregar produtos:", err);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   useEffect(() => {
+    async function carregar() {
+      const response = await listarProdutos();
+      setProdutos(response);
+    }
+
     carregar();
   }, []);
 
-  async function handleDelete(id) {
-    if (!confirm("Deseja realmente excluir este produto?")) return;
-
-    await excluirProduto(id);
-    carregar();
-  }
-
-  if (loading) return <p>Carregando...</p>;
-
   return (
     <div>
-      <h2>Lista de Produtos</h2>
+      <h1>Lista de Produtos</h1>
 
       <table>
         <thead>
@@ -50,12 +33,9 @@ export default function ListarProdutos() {
             <tr key={p.id}>
               <td>{p.id}</td>
               <td>{p.nome}</td>
-              <td>R$ {Number(p.preco).toFixed(2)}</td>
-              <td>{p.categoria?.nome || "Sem categoria"}</td>
-              <td>
-                <button>Editar</button>
-                <button onClick={() => handleDelete(p.id)}>Excluir</button>
-              </td>
+              <td>{p.preco}</td>
+              <td>{p.categoriaNome}</td>
+              <td>Editar / Excluir</td>
             </tr>
           ))}
         </tbody>
