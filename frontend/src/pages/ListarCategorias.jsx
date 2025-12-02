@@ -50,16 +50,18 @@ export default function ListarCategorias() {
 
   return (
     <div style={{ padding: "40px", color: "white" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
-        <h1>LISTAGEM OFICIAL</h1> {/* Título de prova */}
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px", alignItems: "center" }}>
+        <h1 style={{ fontSize: "42px", fontWeight: "700" }}>Categorias</h1>
         <Link 
           to="/categorias/criar" 
           style={{ 
-            background: "#ff7b00", 
-            padding: "10px 20px", 
-            textDecoration: "none", 
-            color: "white", 
-            borderRadius: "6px" 
+            backgroundColor: "#ffb300",
+            color: "black",
+            padding: "12px 22px",
+            borderRadius: "10px",
+            fontWeight: "600",
+            boxShadow: "0px 0px 15px rgba(255,179,0,0.4)",
+            textDecoration: "none"
           }}
         >
           + Nova Categoria
@@ -69,31 +71,74 @@ export default function ListarCategorias() {
       {categorias.length === 0 ? (
         <p>Nenhuma categoria encontrada. Clique em "Nova Categoria" para criar.</p>
       ) : (
-        <table style={{ width: "100%", borderCollapse: "collapse", background: "#222", borderRadius: "8px" }}>
-          <thead>
-            <tr style={{ borderBottom: "1px solid #444", textAlign: "left" }}>
-              <th style={{ padding: "15px" }}>ID</th>
-              <th style={{ padding: "15px" }}>Nome</th>
-              <th style={{ padding: "15px" }}>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categorias.map((cat) => (
-              <tr key={cat.id || Math.random()} style={{ borderBottom: "1px solid #333" }}>
-                <td style={{ padding: "15px" }}>{cat.id}</td>
-                <td style={{ padding: "15px" }}>{cat.nome}</td>
-                <td style={{ padding: "15px" }}>
-                  <button 
-                    onClick={() => deletar(cat.id)}
-                    style={{ background: "red", color: "white", border: "none", padding: "6px 12px", borderRadius: "4px", cursor: "pointer" }}
-                  >
-                    Excluir
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div
+          style={{
+            backgroundColor: "#0f0f16",
+            border: "1px solid #1d1d29",
+            borderRadius: "16px",
+            padding: "25px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.6)",
+          }}
+        >
+          <div style={{
+            background: "#121216",
+            padding: "18px",
+            borderRadius: "12px",
+            border: "1px solid rgba(255,255,255,0.03)",
+          }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", color: "white" }}>
+              <thead>
+                <tr style={{ color: "#b5b5c1", borderBottom: "1px solid #1d1d29", textAlign: "left" }}>
+                  <th style={{ padding: "12px 10px" }}>ID</th>
+                  <th style={{ padding: "12px 10px" }}>Nome</th>
+                  <th style={{ padding: "12px 10px" }}>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {categorias.map((cat) => (
+                  <tr key={cat.id || Math.random()} style={{ borderBottom: "1px solid #1d1d29", height: "56px" }}>
+                    <td style={{ padding: "10px" }}>{cat.id}</td>
+                    <td style={{ padding: "10px" }}>{cat.nome}</td>
+                    <td style={{ padding: "10px" }}>
+                      <Link 
+                        to={`/categorias/editar/${cat.id}`}
+                        style={{
+                          background: "#2b2b30",
+                          color: "#ff6b2d",
+                          padding: "8px 12px",
+                          borderRadius: "8px",
+                          textDecoration: "none",
+                          marginRight: "8px",
+                          border: "1px solid rgba(255,255,255,0.04)",
+                          fontWeight: 600,
+                          fontSize: "14px",
+                          display: "inline-block"
+                        }}
+                      >
+                        Editar
+                      </Link>
+                      <button 
+                        onClick={() => deletar(cat.id)}
+                        style={{ 
+                          background: "#ff6b2d", 
+                          color: "white", 
+                          border: "none", 
+                          padding: "8px 12px", 
+                          borderRadius: "8px", 
+                          cursor: "pointer",
+                          fontWeight: 700,
+                          fontSize: "14px"
+                        }}
+                      >
+                        Excluir
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
     </div>
   );

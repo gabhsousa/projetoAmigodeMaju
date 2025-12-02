@@ -1,4 +1,13 @@
-﻿export default function Navbar() {
+﻿import { useNavigate } from "react-router-dom";
+
+export default function Navbar() {
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
+
   return (
     <div style={styles.navbar}>
       {/* ESQUERDA */}
@@ -9,6 +18,13 @@
       {/* DIREITA */}
       <div style={styles.right}>
         {/* search removed per request */}
+
+        <button
+          onClick={handleLogout}
+          style={styles.logoutButton}
+        >
+          Sair
+        </button>
 
         <div style={styles.avatar} />
       </div>
@@ -40,6 +56,18 @@ const styles = {
     display: "flex",
     alignItems: "center",
     gap: "16px"
+  },
+
+  logoutButton: {
+    background: "#ff6b2d",
+    color: "white",
+    border: "none",
+    padding: "8px 16px",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontWeight: 600,
+    fontSize: "14px",
+    transition: "all 0.2s"
   },
 
   // search styles removed

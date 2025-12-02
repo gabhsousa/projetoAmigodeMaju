@@ -50,56 +50,83 @@ export default function ListarPedidos() {
     <div style={{ padding: "40px", color: "white" }}>
       
       {/* CABEÇALHO COM O BOTÃO NOVO */}
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
-        <h1>Pedidos</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px", alignItems: "center" }}>
+        <h1 style={{ fontSize: "42px", fontWeight: "700" }}>Pedidos</h1>
         <Link 
           to="/pedidos/criar" 
           style={{ 
-            background: "#ff7b00", 
-            padding: "10px 20px", 
-            textDecoration: "none", 
-            color: "white", 
-            borderRadius: "6px",
-            fontWeight: "bold"
+            backgroundColor: "#ffb300",
+            color: "black",
+            padding: "12px 22px",
+            borderRadius: "10px",
+            fontWeight: "600",
+            boxShadow: "0px 0px 15px rgba(255,179,0,0.4)",
+            textDecoration: "none"
           }}
         >
           + Novo Pedido
         </Link>
       </div>
 
-      <table style={{ width: "100%", borderCollapse: "collapse", background: "#222", borderRadius: "8px" }}>
-        <thead>
-          <tr style={{ textAlign: "left", borderBottom: "1px solid #444" }}>
-            <th style={{ padding: "15px" }}>Nº</th>
-            <th style={{ padding: "15px" }}>Cliente</th>
-            <th style={{ padding: "15px" }}>Total</th>
-            <th style={{ padding: "15px" }}>Status</th>
-            <th style={{ padding: "15px" }}>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pedidos.map((pedido) => (
-            <tr key={pedido.id} style={{ borderBottom: "1px solid #333" }}>
-              <td style={{ padding: "15px" }}>{pedido.id}</td>
-              <td style={{ padding: "15px" }}>{pedido.cliente || "Balcão"}</td>
-              <td style={{ padding: "15px" }}>R$ {Number(pedido.total).toFixed(2)}</td>
-              <td style={{ padding: "15px" }}>
-                <span style={{ background: getStatusColor(pedido.status), padding: "5px 10px", borderRadius: "12px", fontSize: "12px", fontWeight: "bold" }}>
-                  {pedido.status}
-                </span>
-              </td>
-              <td style={{ padding: "15px" }}>
-                <button 
-                  onClick={() => setPedidoSelecionado(pedido)} 
-                  style={{ background: "#ff7b00", color: "white", border: "none", padding: "8px 16px", borderRadius: "6px", cursor: "pointer" }}
-                >
-                  Ver detalhes
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div
+        style={{
+          backgroundColor: "#0f0f16",
+          border: "1px solid #1d1d29",
+          borderRadius: "16px",
+          padding: "25px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.6)",
+        }}
+      >
+        <div style={{
+          background: "#121216",
+          padding: "18px",
+          borderRadius: "12px",
+          border: "1px solid rgba(255,255,255,0.03)",
+        }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", color: "white" }}>
+            <thead>
+              <tr style={{ color: "#b5b5c1", borderBottom: "1px solid #1d1d29", textAlign: "left" }}>
+                <th style={{ padding: "12px 10px" }}>Nº</th>
+                <th style={{ padding: "12px 10px" }}>Cliente</th>
+                <th style={{ padding: "12px 10px" }}>Total</th>
+                <th style={{ padding: "12px 10px" }}>Status</th>
+                <th style={{ padding: "12px 10px" }}>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pedidos.map((pedido) => (
+                <tr key={pedido.id} style={{ borderBottom: "1px solid #1d1d29", height: "56px" }}>
+                  <td style={{ padding: "10px" }}>{pedido.id}</td>
+                  <td style={{ padding: "10px" }}>{pedido.cliente || "Balcão"}</td>
+                  <td style={{ padding: "10px" }}>R$ {Number(pedido.total).toFixed(2)}</td>
+                  <td style={{ padding: "10px" }}>
+                    <span style={{ background: getStatusColor(pedido.status), padding: "5px 10px", borderRadius: "12px", fontSize: "12px", fontWeight: "bold" }}>
+                      {pedido.status}
+                    </span>
+                  </td>
+                  <td style={{ padding: "10px" }}>
+                    <button 
+                      onClick={() => setPedidoSelecionado(pedido)} 
+                      style={{ 
+                        background: "#2b2b30", 
+                        color: "#ff6b2d", 
+                        border: "1px solid rgba(255,255,255,0.04)", 
+                        padding: "8px 12px", 
+                        borderRadius: "8px", 
+                        cursor: "pointer",
+                        fontWeight: 600,
+                        fontSize: "14px"
+                      }}
+                    >
+                      Ver detalhes
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       {/* MODAL DE DETALHES */}
       {pedidoSelecionado && (
@@ -128,8 +155,8 @@ export default function ListarPedidos() {
             </div>
 
             <div style={{ marginTop: "25px", display: "flex", gap: "10px", justifyContent: "flex-end" }}>
-              <button onClick={() => mudarStatus(pedidoSelecionado.id, "finalizado")} style={{ background: "green", color: "white", padding: "10px 20px", border: "none", borderRadius: "6px", cursor: "pointer" }}>Finalizar</button>
-              <button onClick={() => setPedidoSelecionado(null)} style={{ background: "#555", color: "white", padding: "10px 20px", border: "none", borderRadius: "6px", cursor: "pointer" }}>Fechar</button>
+              <button onClick={() => mudarStatus(pedidoSelecionado.id, "finalizado")} style={{ background: "#2b2b30", color: "#ff6b2d", padding: "8px 12px", border: "1px solid rgba(255,255,255,0.04)", borderRadius: "8px", cursor: "pointer", fontWeight: 600, fontSize: "14px" }}>Finalizar</button>
+              <button onClick={() => setPedidoSelecionado(null)} style={{ background: "#2b2b30", color: "#ff6b2d", padding: "8px 12px", border: "1px solid rgba(255,255,255,0.04)", borderRadius: "8px", cursor: "pointer", fontWeight: 600, fontSize: "14px" }}>Fechar</button>
             </div>
           </div>
         </div>
