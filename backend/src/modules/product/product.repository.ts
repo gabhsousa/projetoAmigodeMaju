@@ -12,6 +12,7 @@ export class ProductRepository {
 
   // BUSCAR UM: Também trazemos a categoria aqui
   show(id: number) {
+
     return prisma.produto.findUnique({
       where: { id },
       include: {
